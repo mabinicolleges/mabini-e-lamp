@@ -1,37 +1,29 @@
 import gspread
 import os
-from dotenv import load_dotenv
 import pandas as pd
-
-load_dotenv()
+import streamlit as st
 
 credentials = {
-    "type": os.getenv("type"),
-    "project_id": os.getenv("project_id"),
-    "private_key_id": os.getenv("private_key_id"),
-    "private_key": os.getenv("private_key"),
-    "client_email": os.getenv("client_email"),
-    "client_id": os.getenv("client_id"),
-    "auth_uri": os.getenv("auth_uri"),
-    "token_uri": os.getenv("token_uri"),
-    "auth_provider_x509_cert_url": os.getenv("auth_provider_x509_cert_url"),
-    "universe_domain": os.getenv("universe_domain")
+    "type": st.secrets.google.type,
+    "project_id": st.secrets.google.project_id,
+    "private_key_id": st.secrets.google.private_key_id,
+    "private_key": st.secrets.google.private_key,
+    "client_email": st.secrets.google.client_email,
+    "client_id": st.secrets.google.client_id,
+    "auth_uri": st.secrets.google.auth_uri,
+    "token_uri": st.secrets.google.token_uri,
+    "auth_provider_x509_cert_url": st.secrets.google.auth_provider_x509_cert_url,
+    "universe_domain": st.secrets.google.universe_domain
 }
 
-gc = gspread.service_account_from_dict(credentials)
+print(credentials)
 
-sh = gc.open_by_key(os.getenv("sheets_id"))
+gc = gspread.service_account_from_dict(credentials)
+sh = gc.open_by_key(st.secrets.gsheets.sheets_id)
 
 sheet_names = [
-    "id",
-    "title",
-    "abstract",
-    "author_name",
-    "author_img_url",
-    "category",
-    "created_year",
-    "keywords",
-    "created_at"
+    "research_data",
+    "researchers_data",
 ]
 
 def get_data_ls_dict(sheet_name: str):
