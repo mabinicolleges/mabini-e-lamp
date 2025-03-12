@@ -28,5 +28,42 @@ img {cursor: default !important;}
 /* Hide any other header buttons */
 header button {display: none;}
 
+div[data-testid="stButton"] {
+    margin-top: 0px;
+}
+
 /* Hide the page navigation pills if they exist */
 div[data-testid="stPageNavButtonContainer"] {display: none;}
+
+div[data-testid="stElementContainer"] hr {
+    margin: 5px;  /* Equal vertical margins (15px top and bottom), 40px horizontal */
+    margin-top: 0px;  /* Reduce default bottom margin of the form button */
+    width: auto;
+    border-top: 1px solid #d3d3d3;  /* Match Streamlit's default style */
+}
+/* Optional: Adjust the form button's bottom margin to fine-tune spacing */
+div[data-testid="stFormSubmitButton"] {
+    margin-bottom: 0px;  /* Reduce default bottom margin of the form button */
+}
+/* Optional: Adjust the visitor button's top margin to fine-tune spacing */
+div[data-testid="stButton"] {
+    margin-top: 0px;  /* Reduce default top margin of the visitor button */
+}
+
+[data-testid="stMetricLabel"] p {
+    font-size: 1.2rem;
+    font-weight: 600;
+}
+
+[data-testid="stMetricValue"] {
+    font-size: 2rem;
+}
+
+div[data-testid="stMetric"],
+div[data-testid="metric-container"] {
+    padding: 5% 5% 5% 10%;
+    border-radius: 10px;
+    border-left: 0.5rem solid #7B169E !important;
+    box-shadow: 0 4px 8px #892892;
+}
+
