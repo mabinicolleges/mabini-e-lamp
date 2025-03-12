@@ -1,2 +1,6 @@
 [theme]
 base = "light"
+primaryColor = "#fb9943"
+
+[client]
+showSidebarNavigation = false
