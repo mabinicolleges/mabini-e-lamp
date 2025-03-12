@@ -27,29 +27,30 @@ def login_page():
             st.image("static/images/landing-img-pane.svg", use_container_width=True)
         
         with form_col:
-            st.header("Research Publisher Login")
+            st.header("Welcome to E-LAMP!")
             st.markdown("Contribute to Mabini's growing knowledge repository.")
             
             login_form = st.form(key="login_form", border=False)
             with login_form:
                 username = st.text_input("Username", placeholder="Publisher ID")
                 password = st.text_input("Password", type="password", placeholder="Access key")
-                submit_button = st.form_submit_button("Login to Publish")
+                submit_button = st.form_submit_button("Login to Publish", use_container_width=True, type="primary")
                 
             if submit_button:
                 if username == "admin" and password == "mabini123":
                     show_google_login()
                 else:
-                    st.error("Invalid credentials. Please try again.")
+                    st.toast("Invalid credentials. Please try again.")
             
-            st.markdown("---")
-            if st.button("Login as Visitor"):
+            st.divider()
+            if st.button("Login as Visitor", use_container_width=True, type="primary"):
                 st.switch_page("interfaces/visitor.py")  # Redirect to visitor/dashboard page
+            st.caption("No publisher account yet? Contact the E-LAMP team to get started.")
 
 @st.dialog("Access Confirmation")
 def show_google_login():
     st.write("To protect the integrity of the research papers of the institution, you need to log in to the college account to access admin account.")
-    if st.button("Proceed with Google Login"):
+    if st.button("Proceed with Google Login", type="primary"):
         # Set flag and close dialog
         st.session_state.auth_required = True
         st.rerun()

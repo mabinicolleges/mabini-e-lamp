@@ -2,6 +2,7 @@ import gspread
 import os
 import pandas as pd
 import streamlit as st
+import time
 
 credentials = {
     "type": st.secrets.google.type,
@@ -15,8 +16,6 @@ credentials = {
     "auth_provider_x509_cert_url": st.secrets.google.auth_provider_x509_cert_url,
     "universe_domain": st.secrets.google.universe_domain
 }
-
-print(credentials)
 
 gc = gspread.service_account_from_dict(credentials)
 sh = gc.open_by_key(st.secrets.gsheets.sheets_id)
@@ -73,3 +72,29 @@ def get_data_df(sheet_name: str, columns_to_access: list[str] = None):
     except Exception as e:
         return f"An error occurred: {str(e)}"
     
+def post_add_new_paper(title, abstract, author_name, author_img_url, category, created_year, keywords, file_url, sheet_name="research_data"):
+    """
+    Adds a new paper entry to the specified Google Sheets worksheet.
+
+    Args:
+        title (str): The title of the paper.
+        abstract (str): The abstract of the paper.
+        author_name (str): The name of the author.
+        author_img_url (str): The URL of the author's image.
+        category (str): The category of the paper.
+        created_year (int): The year the paper was created.
+        keywords (str): Keywords associated with the paper.
+        file_url (str): The URL of the paper file.
+        sheet_name (str, optional): The name of the worksheet to add the entry to. Defaults to "research_data".
+
+    Returns:
+        None
+    """
+    worksheet = sh.worksheet(sheet_name)
+    # Get the last row in the worksheet
+    last_row = worksheet.get_all_values()[-1]
+    # Get the ID from the last row
+    id = int(last_row[0]) + 1
+    created_at = time.strftime("%Y-%m-%d %H:%M:%S")
+    body = [id, title, abstract, author_name, author_img_url, category, created_year, keywords, file_url, created_at]  # the values should be a list
+    worksheet.append_row(body, table_range=f"A{id}:J{id}")
