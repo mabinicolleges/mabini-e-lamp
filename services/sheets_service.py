@@ -92,7 +92,7 @@ def post_add_new_paper(title, abstract, author_name, author_img_url, category, c
     """
     worksheet = sh.worksheet(sheet_name)
     # Get the last row in the worksheet
-    last_row = worksheet.get_all_values()[-1]
+    last_row = worksheet.get_all_values()[-1] if worksheet.get_all_values()[-1] != "id" else 0
     # Get the ID from the last row
     id = int(last_row[0]) + 1
     created_at = time.strftime("%Y-%m-%d %H:%M:%S")

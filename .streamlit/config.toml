@@ -4,3 +4,6 @@ primaryColor = "#fb9943"
 
 [client]
 showSidebarNavigation = false
+
+[server]
+maxUploadSize = 50
