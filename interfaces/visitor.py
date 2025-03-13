@@ -2,10 +2,7 @@ import streamlit as st
 from services import sheets_service as ss
 from services import drive_service as ds
 
-# App title with description
-st.title("Research Database")
-st.caption("Browse, filter, and access research papers from our collection")
-st.markdown("---")
+
 
 # Load data from Google Sheets
 @st.cache_data
@@ -148,83 +145,91 @@ st.session_state.page_num = max(0, st.session_state.page_num)
 start_idx = st.session_state.page_num * items_per_page
 end_idx = min(start_idx + items_per_page, total_items)
 
-# Results summary
-st.write(f"Showing {total_items} results")
-if total_items == 0:
-    st.info("No research papers match your current filters. Try adjusting your search criteria.")
+_, feed_col, _ = st.columns([1,8,1])
 
-# Display research items in cards
-for i in range(start_idx, end_idx):
-    if i < len(filtered_data):
-        research = filtered_data[i]
-        with st.container(border=True):
-            # Paper title and category
-            st.markdown(f"##### {research['title']}")
-            st.caption(f"**Category:** {research.get('category', 'Uncategorized')}")
-            
-            # Create columns for metadata and actions
-            col1, col2, col3 = st.columns([2, 2, 1])
-            
-            with col1:
-                st.markdown(f"**Author:** {research.get('author_name', 'Unknown')}")
-                st.markdown(f"**Year:** {research.get('created_year', 'Unknown')}")
-            
-            with col2:
-                # Abstract preview (first 100 characters)
-                abstract_preview = research.get('abstract', 'No abstract available')
-                if len(abstract_preview) > 100:
-                    abstract_preview = abstract_preview[:100] + "..."
-                st.markdown(f"**Abstract:** {abstract_preview}")
-            
-            with col3:
-                # Action buttons
-                st.link_button("View PDF", url=research['file_url'], use_container_width=True)
-                
-                with st.popover("Cite", use_container_width=True):
-                    tab1, tab2 = st.tabs(["APA", "MLA"])
-                    with tab1:
-                        citation = f"{research.get('author_name', 'Author, A.')} ({research.get('created_year', 'n.d.')}). {research['title']}."
-                        st.code(citation, language=None)
-                        st.button("Copy", key=f"copy_apa_{i}", use_container_width=True)
-                    with tab2:
-                        citation = f"{research.get('author_name', 'Author, A.')}. \"{research['title']}.\" {research.get('created_year', 'n.d.')}."
-                        st.code(citation, language=None)
-                        st.button("Copy", key=f"copy_mla_{i}", use_container_width=True)
-            
-            # Full abstract in an expander
-            with st.expander("View full abstract"):
-                st.write(research.get('abstract', 'No abstract available'))
-
-# Pagination controls
-if total_pages > 1:
+with feed_col:
+    # App title with description
+    st.title("Research Database")
+    st.caption("Browse, filter, and access research papers from our collection")
     st.markdown("---")
-    
-    # Create pagination layout
-    pagination_cols = st.columns([1, 1, 3, 1, 1])
-    
-    with pagination_cols[0]:
-        if st.session_state.page_num > 0:
-            if st.button("First", use_container_width=True):
-                st.session_state.page_num = 0
-                st.rerun()
-    
-    with pagination_cols[1]:
-        if st.session_state.page_num > 0:
-            if st.button("Previous", use_container_width=True):
-                st.session_state.page_num -= 1
-                st.rerun()
-    
-    with pagination_cols[2]:
-        st.markdown(f"<div style='text-align: center'>Page {st.session_state.page_num + 1} of {total_pages}</div>", unsafe_allow_html=True)
-    
-    with pagination_cols[3]:
-        if st.session_state.page_num < total_pages - 1:
-            if st.button("Next", use_container_width=True):
-                st.session_state.page_num += 1
-                st.rerun()
-    
-    with pagination_cols[4]:
-        if st.session_state.page_num < total_pages - 1:
-            if st.button("Last", use_container_width=True):
-                st.session_state.page_num = total_pages - 1
-                st.rerun()
+
+    # Results summary
+    st.write(f"Showing {total_items} results")
+    if total_items == 0:
+        st.info("No research papers match your current filters. Try adjusting your search criteria.")
+
+    # Display research items in cards
+    for i in range(start_idx, end_idx):
+        if i < len(filtered_data):
+            research = filtered_data[i]
+            with st.container(border=True):
+                # Paper title and category
+                st.markdown(f"##### {research['title']}")
+                st.caption(f"**Category:** {research.get('category', 'Uncategorized')}")
+                
+                # Create columns for metadata and actions
+                col1, col2, col3 = st.columns([2, 2, 1])
+                
+                with col1:
+                    st.markdown(f"**Author:** {research.get('author_name', 'Unknown')}")
+                    st.markdown(f"**Year:** {research.get('created_year', 'Unknown')}")
+                
+                with col2:
+                    # Abstract preview (first 100 characters)
+                    abstract_preview = research.get('abstract', 'No abstract available')
+                    if len(abstract_preview) > 100:
+                        abstract_preview = abstract_preview[:100] + "..."
+                    st.markdown(f"**Abstract:** {abstract_preview}")
+                
+                with col3:
+                    # Action buttons
+                    st.link_button("Download", url=f"https://drive.google.com/uc?export=download&id={research['file_url'].split('/')[-2]}", use_container_width=True)
+                    
+                    with st.popover("Cite", use_container_width=True):
+                        tab1, tab2 = st.tabs(["APA", "MLA"])
+                        with tab1:
+                            citation = f"{research.get('author_name', 'Author, A.')} ({research.get('created_year', 'n.d.')}). {research['title']}."
+                            st.code(citation, language=None)
+                            st.button("Copy", key=f"copy_apa_{i}", use_container_width=True)
+                        with tab2:
+                            citation = f"{research.get('author_name', 'Author, A.')}. \"{research['title']}.\" {research.get('created_year', 'n.d.')}."
+                            st.code(citation, language=None)
+                            st.button("Copy", key=f"copy_mla_{i}", use_container_width=True)
+                
+                # Full abstract in an expander
+                with st.expander("View full abstract"):
+                    st.write(research.get('abstract', 'No abstract available'))
+
+    # Pagination controls
+    if total_pages > 1:
+        st.markdown("---")
+        
+        # Create pagination layout
+        pagination_cols = st.columns([1, 1, 3, 1, 1])
+        
+        with pagination_cols[0]:
+            if st.session_state.page_num > 0:
+                if st.button("First", use_container_width=True):
+                    st.session_state.page_num = 0
+                    st.rerun()
+        
+        with pagination_cols[1]:
+            if st.session_state.page_num > 0:
+                if st.button("Previous", use_container_width=True):
+                    st.session_state.page_num -= 1
+                    st.rerun()
+        
+        with pagination_cols[2]:
+            st.markdown(f"<div style='text-align: center'>Page {st.session_state.page_num + 1} of {total_pages}</div>", unsafe_allow_html=True)
+        
+        with pagination_cols[3]:
+            if st.session_state.page_num < total_pages - 1:
+                if st.button("Next", use_container_width=True):
+                    st.session_state.page_num += 1
+                    st.rerun()
+        
+        with pagination_cols[4]:
+            if st.session_state.page_num < total_pages - 1:
+                if st.button("Last", use_container_width=True):
+                    st.session_state.page_num = total_pages - 1
+                    st.rerun()
