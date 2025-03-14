@@ -15,8 +15,7 @@ body * {
 .stDeployButton {display: none;}
 
 /* Hide fullscreen button */
-button[title="View fullscreen"]{
-    visibility: hidden;}
+[data-testid="stElementToolbar"] {display: none;}
 
 /* Hide 'Made with Streamlit' footer */
 footer {visibility: hidden;}
