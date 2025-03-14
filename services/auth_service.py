@@ -20,14 +20,14 @@ def login_page():
     _, login_col, _ = st.columns([1, 3, 1])
 
     with login_col:
-        login_container = st.container(border=True)
+        login_container = st.container(border=False, key='login_container')
         pic_col, form_col = login_container.columns([1, 1])
         
         with pic_col:
             st.image("static/images/landing-img-pane.svg", use_container_width=True)
         
         with form_col:
-            st.header("Welcome to E-LAMP!")
+            st.header("Welcome to E-LAMP")
             st.markdown("Contribute to Mabini's growing knowledge repository.")
             
             login_form = st.form(key="login_form", border=False)
