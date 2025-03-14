@@ -101,229 +101,266 @@ def upload_paper_dialog():
             except Exception as e:
                 message_container.error(f"Error publishing paper: {str(e)}")
 
-# Admin actions section
-st.subheader("Admin Actions")
-st.caption("Upload new papers to the research database")
+_, feed_col, _ = st.columns([1,8,1])
 
-admin_cols = st.columns(2)
-with admin_cols[0]:
-    # Upload button to trigger the dialog
-    if st.button("📄 Upload New Paper", type="primary", use_container_width=True):
-        upload_paper_dialog()
+with feed_col:
 
-with admin_cols[1]:
-    # Refresh data button
-    if st.button("🔄 Refresh Data", use_container_width=True):
-        st.cache_data.clear()
-        st.rerun()
+    # Admin actions section
+    st.subheader("Admin Actions")
+    st.caption("Upload new papers to the research database")
 
-# Initialize session state for filters
-if 'filtered_data' not in st.session_state:
-    st.session_state.filtered_data = research_data
-if 'page_num' not in st.session_state:
-    st.session_state.page_num = 0
+    admin_cols = st.columns(2)
+    with admin_cols[0]:
+        # Upload button to trigger the dialog
+        if st.button("📄 Upload New Paper", type="primary", use_container_width=True):
+            upload_paper_dialog()
 
-# Get min and max years from data for the slider
-years = [int(item['created_year']) for item in research_data 
-         if (isinstance(item.get('created_year', ''), str) and item['created_year'].isdigit()) 
-         or isinstance(item.get('created_year', ''), int)]
-min_year = min(years) if years else 2000
-max_year = max(years) if years else 2023
+    with admin_cols[1]:
+        # Refresh data button
+        if st.button("🔄 Refresh Data", use_container_width=True):
+            st.cache_data.clear()
+            st.rerun()
 
-# Initialize year range in session state if not present
-if 'year_range' not in st.session_state:
-    st.session_state.year_range = (min_year, max_year)
+    # Initialize session state for filters
+    if 'filtered_data' not in st.session_state:
+        st.session_state.filtered_data = research_data
+    if 'page_num' not in st.session_state:
+        st.session_state.page_num = 0
 
-# Function to apply filters
-def apply_filters(search_text, categories, keywords, year_range):
-    """Filter research data based on user-selected criteria"""
-    filtered = research_data.copy()
-    
-    # Apply search filter
-    if search_text:
-        filtered = [item for item in filtered if search_text.lower() in item['title'].lower() 
-                   or search_text.lower() in item['abstract'].lower() 
-                   or search_text.lower() in item['author_name'].lower()]
-    
-    # Apply category filter
-    if categories:
-        filtered = [item for item in filtered if item['category'] in categories]
-    
-    # Apply keywords filter
-    if keywords:
-        keyword_list = [k.strip().lower() for k in keywords.split(',')]
-        filtered = [item for item in filtered if any(k in item.get('keywords', '').lower() for k in keyword_list)]
-    
-    # Apply year range filter
-    year_min, year_max = year_range
-    filtered = [item for item in filtered if (
-        # Check if it's a string and contains digits
-        isinstance(item.get('created_year', ''), str) and item['created_year'].isdigit() and 
-        year_min <= int(item['created_year']) <= year_max
-    ) or (
-        # Or if it's already an integer
-        isinstance(item.get('created_year', 0), int) and 
-        year_min <= item['created_year'] <= year_max
-    )]
+    # Get min and max years from data for the slider
+    years = [int(item['created_year']) for item in research_data 
+            if (isinstance(item.get('created_year', ''), str) and item['created_year'].isdigit()) 
+            or isinstance(item.get('created_year', ''), int)]
+    min_year = min(years) if years else 2000
+    max_year = max(years) if years else 2023
+    if min_year == max_year:
+        max_year = min_year + 1
+
+    # Initialize year range in session state if not present
+    if 'year_range' not in st.session_state:
+        st.session_state.year_range = (min_year, max_year)
+
+    # Function to apply filters
+    def apply_filters(search_text, categories, keywords, year_range):
+        """Filter research data based on user-selected criteria"""
+        filtered = research_data.copy()
         
-    return filtered
+        # Apply search filter
+        if search_text:
+            filtered = [item for item in filtered if search_text.lower() in item['title'].lower() 
+                    or search_text.lower() in item['abstract'].lower() 
+                    or search_text.lower() in item['author_name'].lower()]
+        
+        # Apply category filter
+        if categories:
+            filtered = [item for item in filtered if item['category'] in categories]
+        
+        # Apply keywords filter
+        if keywords:
+            keyword_list = [k.strip().lower() for k in keywords.split(',')]
+            filtered = [item for item in filtered if any(k in item.get('keywords', '').lower() for k in keyword_list)]
+        
+        # Apply year range filter
+        year_min, year_max = year_range
+        filtered = [item for item in filtered if (
+            # Check if it's a string and contains digits
+            isinstance(item.get('created_year', ''), str) and item['created_year'].isdigit() and 
+            year_min <= int(item['created_year']) <= year_max
+        ) or (
+            # Or if it's already an integer
+            isinstance(item.get('created_year', 0), int) and 
+            year_min <= item['created_year'] <= year_max
+        )]
+            
+        return filtered
 
-# Sidebar for filters
-with st.sidebar:
-    st.header("Filter Research Papers")
-    st.caption("Use these filters to find specific papers in the database")
-    
-    with st.form(key="filter_form"):
-        # Search bar
-        input_search_bar = st.text_input(
-            label="Search", 
-            placeholder="Enter title, author, or keywords"
-        )
+    # Sidebar for filters
+    with st.sidebar:
+        st.header("Filter Research Papers")
+        st.caption("Use these filters to find specific papers in the database")
         
-        # Get unique categories
-        categories = sorted(list(set(item['category'] for item in research_data if 'category' in item)))
-        input_category_bar = st.multiselect(
-            label="Categories", 
-            options=categories,
-            placeholder="Select categories"
-        )
-        
-        input_keywords_bar = st.text_input(
-            label="Keywords", 
-            placeholder="Enter comma separated keywords"
-        )
-        
-        # Add year range slider
-        year_range = st.slider(
-            "Publication Year Range",
-            min_value=min_year,
-            max_value=max_year,
-            value=(min_year, max_year),
-            step=1
-        )
-        
-        # Apply filters button
-        filter_button = st.form_submit_button(
-            label="Apply Filters", 
-            type="primary",
-            use_container_width=True
-        )
-        
-        if filter_button:
-            st.session_state.filtered_data = apply_filters(
-                input_search_bar, 
-                input_category_bar, 
-                input_keywords_bar, 
-                year_range
+        with st.form(key="filter_form"):
+            # Search bar
+            input_search_bar = st.text_input(
+                label="Search", 
+                placeholder="Enter title, author, or keywords"
             )
-            st.session_state.page_num = 0  # Reset to first page
+            
+            # Get unique categories
+            categories = sorted(list(set(item['category'] for item in research_data if 'category' in item)))
+            input_category_bar = st.multiselect(
+                label="Categories", 
+                options=categories,
+                placeholder="Select categories"
+            )
+            
+            input_keywords_bar = st.text_input(
+                label="Keywords", 
+                placeholder="Enter comma separated keywords"
+            )
+            
+            # Add year range slider
+            year_range = st.slider(
+                "Publication Year Range",
+                min_value=min_year,
+                max_value=max_year,
+                value=(min_year, max_year),
+                step=1,
+                key="year_range"
+            )
+            
+            # Apply filters button
+            filter_button = st.form_submit_button(
+                label="Apply Filters", 
+                type="primary",
+                use_container_width=True
+            )
+            
+            if filter_button:
+                st.session_state.filtered_data = apply_filters(
+                    input_search_bar, 
+                    input_category_bar, 
+                    input_keywords_bar, 
+                    year_range
+                )
+                st.session_state.page_num = 0  # Reset to first page
+            
+            st.caption("Filters apply to all papers in the database")
         
-        st.caption("Filters apply to all papers in the database")
+        # Admin help section
+        with st.expander("Admin Help"):
+            st.markdown("""
+            **Quick Tips:**
+            - Use the search to find papers by title, author, or content
+            - Filter by category to organize your view
+            - Upload new papers using the button at the top
+            - Use the refresh button to update the database view
+            """)
+        
+        # Add logout button to sidebar bottom
+        st.sidebar.markdown("---")
+        st.sidebar.button("Log out", key="logout", on_click=st.logout, use_container_width=True)
+
+    # Research papers section
+    st.subheader("Research Papers Database")
+    st.caption("View all papers in the database")
+
+    # Main content area
+    filtered_data = st.session_state.filtered_data
+
+    # Pagination setup
+    items_per_page = 10
+    total_items = len(filtered_data)
+    total_pages = max(1, (total_items + items_per_page - 1) // items_per_page)  # Ceiling division
+
+    # Ensure page_num is valid
+    st.session_state.page_num = min(st.session_state.page_num, total_pages - 1)
+    st.session_state.page_num = max(0, st.session_state.page_num)
+
+    # Calculate start and end indices for current page
+    start_idx = st.session_state.page_num * items_per_page
+    end_idx = min(start_idx + items_per_page, total_items)
+
+    # Show results count with better styling
+    st.markdown(f"### Showing {total_items} papers in the database")
+
+    if total_items == 0:
+        st.info("No papers found. Try adjusting your filters to see more results.")
+    else:
+        # Add a subtle divider before the results
+        st.markdown("<hr style='margin: 0.5em 0; opacity: 0.3'>", unsafe_allow_html=True)
+
+    # Display research items in cards with improved styling
+    for i in range(start_idx, end_idx):
+        if i < len(filtered_data):
+            research = filtered_data[i]
+            with st.container(border=True):
+                # Create a header row with title and category badge
+                header_col, badge_col = st.columns([4, 1])
+                
+                with header_col:
+                    st.markdown(f"##### {research['title']}")
+                
+                with badge_col:
+                    # category = research.get('category', 'Uncategorized')
+                    # st.markdown(f"""
+                    # <div style='background-color: #e5eaf5; padding: 4px 8px; 
+                    # border-radius: 10px; text-align: center; font-size: 0.8em;'>
+                    # {category}
+                    # </div>
+                    # """, unsafe_allow_html=True)
+                    # View PDF button with icon
+                    if 'file_url' in research:
+                        st.link_button("📄 View PDF", url=research['file_url'], 
+                                    use_container_width=True)
+                
+                # Paper details in two columns with better spacing
+                info_col, preview_col = st.columns([1, 2])
+                
+                with info_col:
+                    # Author with optional image
+                    if 'author_img_url' in research and research['author_img_url']:
+                        st.markdown(f"""
+                        <div style='display: flex; align-items: center; margin-bottom: 10px;'>
+                            <img src="{research['author_img_url']}" style='width: 40px; height: 40px; 
+                            border-radius: 50%; margin-right: 10px;'>
+                            <div><strong>Author:</strong> {research.get('author_name', 'Unknown')}</div>
+                        </div>
+                        """, unsafe_allow_html=True)
+                    else:
+                        st.markdown(f"{research.get('author_name', 'Unknown')}")
+                    
+                    # Year with icon
+                    st.markdown(f"Year: {research.get('created_year', 'Unknown')}")
+
+                    # Year with icon
+                    st.markdown(f"Category: {research.get('category', 'Unknown')}")
+                    
     
-    # Admin help section
-    with st.expander("Admin Help"):
-        st.markdown("""
-        **Quick Tips:**
-        - Use the search to find papers by title, author, or content
-        - Filter by category to organize your view
-        - Upload new papers using the button at the top
-        - Use the refresh button to update the database view
-        """)
-    
-    # Add logout button to sidebar bottom
-    st.sidebar.markdown("---")
-    st.sidebar.button("Log out", key="logout", on_click=st.logout, use_container_width=True)
-
-# Research papers section
-st.subheader("Research Papers Database")
-st.caption("View all papers in the database")
-
-# Main content area
-filtered_data = st.session_state.filtered_data
-
-# Pagination setup
-items_per_page = 10
-total_items = len(filtered_data)
-total_pages = max(1, (total_items + items_per_page - 1) // items_per_page)  # Ceiling division
-
-# Ensure page_num is valid
-st.session_state.page_num = min(st.session_state.page_num, total_pages - 1)
-st.session_state.page_num = max(0, st.session_state.page_num)
-
-# Calculate start and end indices for current page
-start_idx = st.session_state.page_num * items_per_page
-end_idx = min(start_idx + items_per_page, total_items)
-
-# Show results count
-st.write(f"Showing {total_items} papers in the database")
-
-if total_items == 0:
-    st.info("No papers found.")
-
-# Display research items in cards
-for i in range(start_idx, end_idx):
-    if i < len(filtered_data):
-        research = filtered_data[i]
-        with st.container(border=True):
-            # Paper header with title
-            st.markdown(f"##### {research['title']}")
-            st.caption(f"**Category:** {research.get('category', 'Uncategorized')}")
-            
-            # Paper details in two columns
-            info_col, preview_col = st.columns([1, 2])
-            
-            with info_col:
-                st.markdown(f"**Author:** {research.get('author_name', 'Unknown')}")
-                st.markdown(f"**Year:** {research.get('created_year', 'Unknown')}")
-                st.markdown(f"**Keywords:** {research.get('keywords', 'None')}")
                 
-                # View PDF button
-                if 'file_url' in research:
-                    st.link_button("📄 View PDF", url=research['file_url'], use_container_width=True)
-            
-            with preview_col:
-                # Abstract preview with expandable full view
-                abstract = research.get('abstract', 'No abstract available')
-                preview_length = min(200, len(abstract))
-                
-                st.markdown("**Abstract Preview:**")
-                st.markdown(f"{abstract[:preview_length]}{'...' if len(abstract) > preview_length else ''}")
-                
-                with st.expander("View Full Abstract"):
-                    st.write(abstract)
+                with preview_col:
+                    # Abstract preview with expandable full view
+                    abstract = research.get('abstract', 'No abstract available')
+                    preview_length = min(200, len(abstract))
+                    
+                    st.markdown("**Abstract Preview:**")
+                    st.markdown(f"{abstract[:preview_length]}{'...' if len(abstract) > preview_length else ''}")
+                    
+                    with st.expander("View Full Abstract"):
+                        st.write(abstract)
 
-# Pagination controls with better styling
-if total_pages > 1:
-    st.markdown("---")
-    pagination_cols = st.columns([1, 1, 3, 1, 1])
+        # Pagination controls with better styling
+        if total_pages > 1:
+            st.markdown("---")
+            pagination_cols = st.columns([1, 1, 3, 1, 1])
 
-    with pagination_cols[0]:
-        if st.session_state.page_num > 0:
-            if st.button("First", use_container_width=True, type="primary"):
-                st.session_state.page_num = 0
-                st.rerun()
+            with pagination_cols[0]:
+                if st.session_state.page_num > 0:
+                    if st.button("First", use_container_width=True, type="primary"):
+                        st.session_state.page_num = 0
+                        st.rerun()
 
-    with pagination_cols[1]:
-        if st.session_state.page_num > 0:
-            if st.button("Previous", use_container_width=True, type="primary"):
-                st.session_state.page_num -= 1
-                st.rerun()
+            with pagination_cols[1]:
+                if st.session_state.page_num > 0:
+                    if st.button("Previous", use_container_width=True, type="primary"):
+                        st.session_state.page_num -= 1
+                        st.rerun()
 
-    with pagination_cols[2]:
-        st.markdown(f"<div style='text-align: center'>Page {st.session_state.page_num + 1} of {total_pages}</div>", unsafe_allow_html=True)
+            with pagination_cols[2]:
+                st.markdown(f"<div style='text-align: center'>Page {st.session_state.page_num + 1} of {total_pages}</div>", unsafe_allow_html=True)
 
-    with pagination_cols[3]:
-        if st.session_state.page_num < total_pages - 1:
-            if st.button("Next", use_container_width=True, type="primary"):
-                st.session_state.page_num += 1
-                st.rerun()
+            with pagination_cols[3]:
+                if st.session_state.page_num < total_pages - 1:
+                    if st.button("Next", use_container_width=True, type="primary"):
+                        st.session_state.page_num += 1
+                        st.rerun()
 
-    with pagination_cols[4]:
-        if st.session_state.page_num < total_pages - 1:
-            if st.button("Last", use_container_width=True, type="primary"):
-                st.session_state.page_num = total_pages - 1
-                st.rerun()
+            with pagination_cols[4]:
+                if st.session_state.page_num < total_pages - 1:
+                    if st.button("Last", use_container_width=True, type="primary"):
+                        st.session_state.page_num = total_pages - 1
+                        st.rerun()
 
-# Footer with admin information
-st.markdown("---")
-st.caption("Admin Dashboard | Research Database Management System")
+        # Footer with admin information
+        st.markdown("---")
+        st.caption("Admin Dashboard | Research Database Management System")

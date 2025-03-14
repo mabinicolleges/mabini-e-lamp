@@ -24,6 +24,8 @@ years = [int(item['created_year']) for item in research_data
          or isinstance(item.get('created_year', ''), int)]
 min_year = min(years) if years else 2000
 max_year = max(years) if years else 2023
+if min_year == max_year:
+    max_year = min_year + 1
 
 # Initialize year range in session state
 if 'year_range' not in st.session_state:
@@ -97,7 +99,8 @@ with st.sidebar:
             min_value=min_year,
             max_value=max_year,
             value=(min_year, max_year),
-            step=1
+            step=2,
+            key="year_range"
         )
         
         # Apply filters button
@@ -156,7 +159,7 @@ with feed_col:
     # Results summary
     st.write(f"Showing {total_items} results")
     if total_items == 0:
-        st.info("No research papers match your current filters. Try adjusting your search criteria.")
+        st.info("No papers found.")
 
     # Display research items in cards
     for i in range(start_idx, end_idx):

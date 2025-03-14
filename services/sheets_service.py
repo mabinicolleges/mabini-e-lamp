@@ -91,10 +91,24 @@ def post_add_new_paper(title, abstract, author_name, author_img_url, category, c
         None
     """
     worksheet = sh.worksheet(sheet_name)
-    # Get the last row in the worksheet
-    last_row = worksheet.get_all_values()[-1] if worksheet.get_all_values()[-1] != "id" else 0
-    # Get the ID from the last row
-    id = int(last_row[0]) + 1
+
+    # Get all values from the worksheet
+    all_values = worksheet.get_all_values()
+    
+    # Handle empty sheet or sheet with only headers
+    if not all_values:
+        # Sheet is completely empty
+        id = 1
+    elif len(all_values) == 1:
+        # Sheet only has headers
+        id = 1
+    else:
+        # Sheet has data rows
+        try:
+            id = int(all_values[-1][0]) + 1
+        except ValueError:
+            # If last row's first column isn't a valid integer
+            id = 1
     created_at = time.strftime("%Y-%m-%d %H:%M:%S")
     body = [id, title, abstract, author_name, author_img_url, category, created_year, keywords, file_url, created_at]  # the values should be a list
     worksheet.append_row(body, table_range=f"A{id}:J{id}")
