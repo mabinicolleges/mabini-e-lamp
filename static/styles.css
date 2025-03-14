@@ -41,6 +41,13 @@ div[data-testid="stElementContainer"] hr {
     width: auto;
     border-top: 1px solid #d3d3d3;  /* Match Streamlit's default style */
 }
+
+.st-key-login_container {
+    box-shadow: 0 4px 14px 0 #070605;
+    border-radius: 10px;
+    padding: 0px 20px 0px 0px;
+}
+
 /* Optional: Adjust the form button's bottom margin to fine-tune spacing */
 div[data-testid="stFormSubmitButton"] {
     margin-bottom: 0px;  /* Reduce default bottom margin of the form button */
@@ -66,4 +73,3 @@ div[data-testid="metric-container"] {
     border-left: 0.5rem solid #7B169E !important;
     box-shadow: 0 4px 8px #892892;
 }
-
