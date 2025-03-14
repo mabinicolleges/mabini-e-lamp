@@ -42,10 +42,50 @@ div[data-testid="stElementContainer"] hr {
 }
 
 .st-key-login_container {
-    box-shadow: 0 4px 14px 0 #070605;
+    box-shadow: 0 2px 12px 0 #cfc9c2;
     border-radius: 10px;
-    padding: 0px 20px 0px 0px;
+    padding: 15px 15px 15px 15px;
 }
+
+[class*="st-key-feed_container"] {
+    box-shadow:
+      0 1px 1px hsl(0deg 0% 0% / 0.075),
+      0 2px 2px hsl(0deg 0% 0% / 0.075),
+      0 4px 4px hsl(0deg 0% 0% / 0.075),
+      0 8px 8px hsl(0deg 0% 0% / 0.075),
+      0 16px 16px hsl(0deg 0% 0% / 0.075)
+    ;
+    border-radius: 10px;
+    padding: 20px 20px 20px 20px;
+}
+
+
+[class*="st-key-author_btn"] button {
+    border: none !important;
+    box-shadow: none !important;
+    background-color: transparent !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    text-align: left !important;
+    color: inherit !important;
+    font-weight: normal !important;
+    min-height: 0 !important;
+    height: auto !important;
+    line-height: inherit !important;
+}
+
+/* Optional hover effect */
+[class*="st-key-author_btn"]:hover,
+[class*="st-key-author_btn"] button:hover {
+    text-decoration: underline !important;
+    color: #fb9943 !important;
+}
+
+.stPopoverBody {
+    max-width: 300px !important; /* Match the width above */
+    width: 300px !important;
+  }
+
 
 /* Optional: Adjust the form button's bottom margin to fine-tune spacing */
 div[data-testid="stFormSubmitButton"] {
