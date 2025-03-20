@@ -89,6 +89,7 @@ def upload_paper_dialog(research_df):
     button_col1, button_col2 = st.columns([1, 3])
     with button_col1:
         publish_button = st.button("Publish Paper", type="primary", use_container_width=True)
+        st.cache_data.clear()
     
     message_container = st.empty()
     if publish_button:
