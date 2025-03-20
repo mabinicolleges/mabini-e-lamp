@@ -198,7 +198,7 @@ with st.sidebar:
 # Main content area
 _, feed_col, _ = st.columns([1, 8, 1])
 with feed_col:
-    st.image(r"static\images\visitor-header.svg", use_container_width=True)
+    st.image(r"static/images/visitor-header.svg", use_container_width=True)
     st.markdown("""
     <style>
     [data-testid="stTextInput"] {

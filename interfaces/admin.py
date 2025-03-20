@@ -254,7 +254,7 @@ with st.sidebar:
 _, feed_col, _ = st.columns([1, 8, 1])
 with feed_col:
 
-    st.image(r"static\images\visitor-header.svg", use_container_width=True)
+    st.image(r"static/images/visitor-header.svg", use_container_width=True)
  
     # Admin actions
     admin_cols = st.columns(2)
