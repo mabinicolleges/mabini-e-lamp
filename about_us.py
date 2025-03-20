@@ -8,21 +8,21 @@ st.write("---")
 # Group Members List
 group_members = [
     {"name": "Dela Mata,  \nKatrina Cassandra P.", "image": r"static/images/about_us/dela_mata.png", "facebook": "https://www.facebook.com/share/1E4Nd41pQc/", "linkedin": "#"},
-    {"name": "Dominguez,  \nBrein Lebron M.", "image": r"static\images\about_us\dominguez.png", "facebook": "https://www.facebook.com/share/191JYgG1qo/", "linkedin": "#"},
-    {"name": "Eboña,  \nKyla L.", "image": r"static\images\about_us\eboña.png", "facebook": "https://www.facebook.com/share/15aucJZkXs/", "linkedin": "#"},
-    {"name": "Echano,  \nSamantha Shane V.", "image": r"static\images\about_us\echano.png", "facebook": "https://www.facebook.com/share/15YnWcdq13/", "linkedin": "#"},
-    {"name": "Espanto,  \nRyza Regina A.", "image": r"static\images\about_us\espanto.png", "facebook": "https://www.facebook.com/share/17eJ51YbS1/", "linkedin": "#"},
-    {"name": "Estilles,  \nNecamae B.", "image": r"static\images\about_us\estilles.png", "facebook": "https://www.facebook.com/share/1A2JYf7MPK/", "linkedin": "#"},
-    {"name": "Francisco,  \nDan Angelo R.", "image": r"static\images\about_us\francisco.png", "facebook": "https://www.facebook.com/share/1ALefGwrr7/", "linkedin": "#"},
-    {"name": "Gaya,  \nPrincess Jannah V.", "image": r"static\images\about_us\gaya.png", "facebook": "https://www.facebook.com/share/163xwL7fDN/", "linkedin": "#"},
-    {"name": "Gomez,  \nDaphne A.", "image": r"static\images\about_us\gomez.png", "facebook": "https://www.facebook.com/share/1FASbk6sxM/", "linkedin": "#"},
-    {"name": "Goyal,  \nAshley R.", "image": r"static\images\about_us\goyal.png", "facebook": "https://www.facebook.com/share/1DkJv4Cdt9/", "linkedin": "#"},
+    {"name": "Dominguez,  \nBrein Lebron M.", "image": r"static/images/about_us/dominguez.png", "facebook": "https://www.facebook.com/share/191JYgG1qo/", "linkedin": "#"},
+    {"name": "Eboña,  \nKyla L.", "image": r"static/images/about_us/eboña.png", "facebook": "https://www.facebook.com/share/15aucJZkXs/", "linkedin": "#"},
+    {"name": "Echano,  \nSamantha Shane V.", "image": r"static/images/about_us/echano.png", "facebook": "https://www.facebook.com/share/15YnWcdq13/", "linkedin": "#"},
+    {"name": "Espanto,  \nRyza Regina A.", "image": r"static/images/about_us/espanto.png", "facebook": "https://www.facebook.com/share/17eJ51YbS1/", "linkedin": "#"},
+    {"name": "Estilles,  \nNecamae B.", "image": r"static/images/about_us/estilles.png", "facebook": "https://www.facebook.com/share/1A2JYf7MPK/", "linkedin": "#"},
+    {"name": "Francisco,  \nDan Angelo R.", "image": r"static/images/about_us/francisco.png", "facebook": "https://www.facebook.com/share/1ALefGwrr7/", "linkedin": "#"},
+    {"name": "Gaya,  \nPrincess Jannah V.", "image": r"static/images/about_us/gaya.png", "facebook": "https://www.facebook.com/share/163xwL7fDN/", "linkedin": "#"},
+    {"name": "Gomez,  \nDaphne A.", "image": r"static/images/about_us/gomez.png", "facebook": "https://www.facebook.com/share/1FASbk6sxM/", "linkedin": "#"},
+    {"name": "Goyal,  \nAshley R.", "image": r"static/images/about_us/goyal.png", "facebook": "https://www.facebook.com/share/1DkJv4Cdt9/", "linkedin": "#"},
 ]
 
 # Developers List
 developers = [
-    {"name": "John Paul Curada", "role": "Developer - J&G Innovations", "image": r"static\images\about_us\curada.png", "facebook": "https://www.facebook.com/jp.curada.3", "linkedin": "https://www.linkedin.com/in/jpcurada/"},
-    {"name": "Carlos Jerico Dela Torre", "role": "Developer", "image": r"static\images\about_us\dela_torre.png", "facebook": "https://www.facebook.com/2iLiTE", "linkedin": "https://www.linkedin.com/in/delatorrecj/"}
+    {"name": "John Paul Curada", "role": "Developer - J&G Innovations", "image": r"static/images/about_us/curada.png", "facebook": "https://www.facebook.com/jp.curada.3", "linkedin": "https://www.linkedin.com/in/jpcurada/"},
+    {"name": "Carlos Jerico Dela Torre", "role": "Developer", "image": r"static/images/about_us/dela_torre.png", "facebook": "https://www.facebook.com/2iLiTE", "linkedin": "https://www.linkedin.com/in/delatorrecj/"}
 ]
 
 def display_members(members, show_linkedin=False):
