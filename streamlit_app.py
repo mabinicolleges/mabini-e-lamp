@@ -12,11 +12,12 @@ with open("static/styles.css") as css:
 login = st.Page(login_page, title="Login", icon="🔑")
 admin = st.Page("interfaces/admin.py", title="Admin", icon="🏠", default=True)
 visitor = st.Page("interfaces/visitor.py", title="Visitor", icon="📊")
+about = st.Page("about_us.py", title="About Us", icon="ℹ️")
 
 # Set up navigation based on authentication status and authorization
 if not st.experimental_user.is_logged_in or st.experimental_user.email not in st.secrets.allowed_users.emails:
     # Only show login page if not authenticated or not authorized
-    pg = st.navigation([login, visitor], position="hidden")  
+    pg = st.navigation([login, visitor, about], position="hidden")  
 else:
     # Show all pages if authenticated and authorized
     pg = st.navigation([admin])

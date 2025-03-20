@@ -1,5 +1,6 @@
 import streamlit as st
 import time
+from components.footer import display_footer
 
 def login_page():
     # Check if authentication is required first
@@ -46,6 +47,8 @@ def login_page():
             if st.button("Login as Visitor", use_container_width=True, type="primary"):
                 st.switch_page("interfaces/visitor.py")  # Redirect to visitor/dashboard page
             st.caption("No publisher account yet? Contact the E-LAMP team to get started.")
+
+        display_footer()
 
 @st.dialog("Access Confirmation")
 def show_google_login():

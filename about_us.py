@@ -1,7 +1,5 @@
 import streamlit as st
-
-# Page Configuration
-st.set_page_config(page_title="About Us", page_icon="📌", layout="centered")
+from components.footer import display_footer  # Import the footer component
 
 # Title and Project Description
 st.title("About Us")
@@ -71,3 +69,6 @@ display_members(developers, show_linkedin=True)
 # Footer
 st.write("---")
 st.write("_PROJECT IN NCM 110: NURSING INFORMATICS | BATCH 2024-2025  \n© 2025 Group 2 | E-lamp | All Rights Reserved_")
+
+# Add the custom footer
+display_footer()

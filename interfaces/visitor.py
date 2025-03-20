@@ -5,6 +5,8 @@ from fuzzywuzzy import fuzz
 import pandas as pd
 import requests
 import re
+from components.footer import display_footer
+
 
 # Load and cache data with preprocessing
 @st.cache_data
@@ -198,7 +200,7 @@ with st.sidebar:
 # Main content area
 _, feed_col, _ = st.columns([1, 8, 1])
 with feed_col:
-    st.image(r"static/images/visitor-header.svg", use_container_width=True)
+    st.image(r"static/images/visitor-header_resized.svg", use_container_width=True)
     st.markdown("""
     <style>
     [data-testid="stTextInput"] {
@@ -334,3 +336,8 @@ with feed_col:
                 if st.button("Last", use_container_width=True):
                     st.session_state.page_num = total_pages - 1
                     st.rerun()
+
+        display_footer()
+
+
+    

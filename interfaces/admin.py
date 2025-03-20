@@ -6,6 +6,8 @@ import pandas as pd
 import requests
 import re
 import time
+from components.footer import display_footer
+
 
 # Load and cache data with preprocessing
 @st.cache_data
@@ -254,7 +256,7 @@ with st.sidebar:
 _, feed_col, _ = st.columns([1, 8, 1])
 with feed_col:
 
-    st.image(r"static/images/visitor-header.svg", use_container_width=True)
+    st.image(r"static/images/admin-header_resized.svg", use_container_width=True)
  
     # Admin actions
     admin_cols = st.columns(2)
@@ -357,7 +359,7 @@ with feed_col:
                 
                 with st.expander("View full abstract"):
                     st.write(research.get('abstract', 'No abstract available'))
-
+                    
     # Pagination controls
     if total_pages > 1:
         st.markdown("---")
@@ -384,3 +386,5 @@ with feed_col:
                 if st.button("Last", use_container_width=True):
                     st.session_state.page_num = total_pages - 1
                     st.rerun()
+
+        display_footer()
