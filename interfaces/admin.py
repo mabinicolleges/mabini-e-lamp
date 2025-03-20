@@ -250,13 +250,12 @@ with st.sidebar:
     st.sidebar.markdown("---")
     st.sidebar.button("Log out", key="logout", on_click=st.logout, use_container_width=True)
 
-# Main content area
+
 _, feed_col, _ = st.columns([1, 8, 1])
 with feed_col:
-    st.title("Admin Dashboard")
-    st.caption("Manage research papers and upload new content to the database")
-    st.markdown("---")
-    
+
+    st.image(r"static\images\visitor-header.svg", use_container_width=True)
+ 
     # Admin actions
     admin_cols = st.columns(2)
     with admin_cols[0]:
