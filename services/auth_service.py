@@ -3,6 +3,7 @@ import time
 from components.footer import display_footer
 
 def login_page():
+    
     # Check if authentication is required first
     if "auth_required" in st.session_state and st.session_state.auth_required:
         # Clear the flag to prevent infinite loops

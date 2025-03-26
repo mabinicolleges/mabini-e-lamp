@@ -1,24 +1,27 @@
 import streamlit as st
 
-
 def display_footer():
     """
-    Display a consistent footer across all pages.
+    Display a consistent footer across all pages that matches the design shown in the image.
     """
-    st.markdown("---")
-    
-    footer_col1, footer_col2, footer_col3 = st.columns(3)
-    
-    with footer_col1:
-        st.image("static/images/MC_MIDNURSING_Logo.gif", width=100)
-    
-    with footer_col2:
-        st.markdown("### E-LAMP")
-        st.markdown("Research Management System")
-        st.markdown("Mabini Colleges")
-    
-    with footer_col3:
-        st.markdown("**Quick Links**")
-        st.markdown("[About Us](/about_us)")  
-    
-    st.markdown("<div style='text-align: center; color: #888; padding: 20px 0 10px;'>© 2025 Mabini Colleges | E-LAMP Research Management System | All Rights Reserved</div>", unsafe_allow_html=True)
+
+    # Footer HTML structure
+    st.markdown("""
+    <div class="footer-container">
+        <div class="logo-container">
+            <img src="app/static/images/MC_MIDNURSING_Logo.gif" alt="Nursing Logo">
+            <img src="app/static/images/MC_MIDNURSING_Logo.gif" alt="Mabini Logo">
+            <img src="app/static/images/MC_MIDNURSING_Logo.gif" alt="College Logo">
+            <img src="app/static/images/MC_MIDNURSING_Logo.gif" alt="CON Logo">
+        </div>
+        <div class="footer-title">THE MABINIAN E-LAMP</div>
+        <div class="footer-subtitle">Research Management System</div>
+        <div class="footer-college">Mabini Colleges Inc.</div>
+        <div class="footer-links">
+            <a href="/about_us">About Us</a>
+            <a href="/privacy_policy">Privacy Policy</a>
+            <a href="/guide">Guide</a>
+        </div>
+        <div class="footer-copyright">©Mabini Colleges Inc. | The Mabinian E-Lamp Research Management System | All Rights Reserved</div>
+    </div>
+    """, unsafe_allow_html=True)

@@ -7,6 +7,20 @@ import requests
 import re
 from components.footer import display_footer
 
+# This CSS will override the global .stMain style for the current page
+page_bg_css = """
+<style>
+/* Override the global gradient background with a solid color */
+.stApp {{
+    background-color: "#ffdab0" !important;
+    background-image: none !important;
+}}
+</style>
+"""
+# Apply the custom CSS
+st.markdown(page_bg_css, unsafe_allow_html=True)
+    
+    
 
 # Load and cache data with preprocessing
 @st.cache_data
@@ -337,7 +351,7 @@ with feed_col:
                     st.session_state.page_num = total_pages - 1
                     st.rerun()
 
-        display_footer()
+    display_footer()
 
 
     

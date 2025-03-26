@@ -38,6 +38,7 @@ div[data-testid="stElementContainer"] hr {
     margin: 5px;  /* Equal vertical margins (15px top and bottom), 40px horizontal */
     margin-top: 0px;  /* Reduce default bottom margin of the form button */
     width: auto;
+    background: #F3E7E7;
     border-top: 1px solid #d3d3d3;  /* Match Streamlit's default style */
 }
 
@@ -45,6 +46,7 @@ div[data-testid="stElementContainer"] hr {
     box-shadow: 0 2px 12px 0 #cfc9c2;
     border-radius: 10px;
     padding: 15px 15px 15px 15px;
+    background: #F3E7E7;
 }
 
 [class*="st-key-feed_container"] {
@@ -56,7 +58,8 @@ div[data-testid="stElementContainer"] hr {
       0 16px 16px hsl(0deg 0% 0% / 0.075)
     ;
     border-radius: 10px;
-    padding: 20px 20px 20px 20px;
+    padding: 40px 40px 40px 40px;
+    background: #F3E7E7;
 }
 
 
@@ -113,30 +116,177 @@ div[data-testid="metric-container"] {
     box-shadow: 0 4px 8px #892892;
 }
 
-/* Footer Styles */
-footer {
-    background-color: #f5f5f5;
-    padding: 20px 0;
+.footer-container {
+    background-color: #F9B233; /* Gold background color */
+    padding: 20px;
+    text-align: center;
+    width: 100%;
     margin-top: 30px;
-    border-top: 1px solid #e0e0e0;
 }
-
-footer a {
-    color: #fb9943;
+.logo-container {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-bottom: 15px;
+}
+.logo-container img {
+    height: 50px;
+    width: auto;
+}
+.footer-title {
+    font-size: 28px;
+    font-weight: bold;
+    margin: 5px 0;
+    color: #000;
+}
+.footer-subtitle {
+    font-size: 18px;
+    margin: 5px 0;
+    color: #000;
+}
+.footer-college {
+    font-size: 16px;
+    margin: 5px 0 10px 0;
+    color: #000;
+}
+.footer-links {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin: 10px 0;
+}
+.footer-links a {
+    color: #000;
     text-decoration: none;
+    font-size: 16px;
+    padding: 5px 10px;
+    border-radius: 4px;
+    transition: background-color 0.3s;
 }
-
-footer a:hover {
+.footer-links a:hover {
+    background-color: rgba(0,0,0,0.1);
     text-decoration: underline;
 }
-
-.footer-container {
-    padding: 0 15px;
+.footer-copyright {
+    font-size: 14px;
+    color: #544c4c;
+    margin-top: 10px;
 }
 
-.footer-copyright {
+
+.stMain {
+    background: linear-gradient(0deg, rgba(255,189,41,1) 0%, rgba(205,96,0,1) 100%);
+    background-size: cover;
+    background-position: center;
+}
+
+/* Optional: Remove the header's space completely */
+[data-testid="stHeader"] {
+    display: none !important;
+}
+
+
+/* Optional: Adjust the form button's bottom margin to fine-tune spacing */
+.team-header {
     text-align: center;
-    margin-top: 20px;
-    color: #888;
-    font-size: 0.9em;
+    margin-bottom: 2rem;
+    padding: 1rem;
+    background-color: #F9B233;
+    border-radius: 10px;
+    color: #333;
+}
+.member-card {
+    background-color: white;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    margin-bottom: 20px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border: 1px solid transparent;
+}
+.member-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+    border: 1px solid #F9B233;
+}
+.member-image {
+    height: 280px;
+    overflow: hidden;
+    border-radius: 8px;
+    margin-bottom: 15px;
+}
+.member-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.leader-card {
+    background-color: #fff0c9;
+    border: 2px solid #F9B233;
+}
+.member-name {
+    font-weight: bold;
+    margin-top: 8px;
+    font-size: 1.1rem;
+    color: #333;
+}
+.member-role {
+    color: #666;
+    font-size: 0.9rem;
+    margin-bottom: 10px;
+    font-style: italic;
+}
+.social-links {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+}
+.social-links a {
+    display: inline-block;
+    transition: transform 0.2s ease;
+}
+.social-links a:hover {
+    transform: scale(1.2);
+}
+.social-links img {
+    width: 24px;
+    height: 24px;
+}
+.section-title {
+    position: relative;
+    padding-bottom: 10px;
+    margin-bottom: 30px;
+    font-size: 1.8rem;
+    color: #333;
+}
+.section-title:after {
+    content: "";
+    position: absolute;
+    width: 100px;
+    height: 4px;
+    background-color: #F9B233;
+    bottom: 0;
+    left: 0;
+}
+.page-title {
+    text-align: center;
+    font-size: 2.5rem;
+    color: #333;
+    margin-bottom: 10px;
+}
+.page-subtitle {
+    text-align: center;
+    font-size: 1.2rem;
+    color: #666;
+    margin-bottom: 30px;
+}
+.project-info {
+    background-color: white;
+    padding: 25px;
+    border-radius: 10px;
+    margin-bottom: 30px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+.about-content {
+    line-height: 1.6;
 }
