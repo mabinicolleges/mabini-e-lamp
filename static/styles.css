@@ -117,11 +117,11 @@ div[data-testid="metric-container"] {
 }
 
 .footer-container {
-    background-color: #F9B233; /* Gold background color */
+    /* background-color: #F9B233; Gold background color */
     padding: 20px;
     text-align: center;
     width: 100%;
-    margin-top: 30px;
+    margin-top: 20px;
 }
 .logo-container {
     display: flex;
