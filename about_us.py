@@ -45,7 +45,7 @@ with feed_col:
             {"name": "Goyal, Ashley R.", "role": "Team Leader", "image": "app/static/images/about_us/goyal.png", "facebook": "https://www.facebook.com/ashleyrafer.goya/", "linkedin": "https://www.linkedin.com/", "is_leader": True},
             {"name": "Dela Mata, Katrina Cassandra P.", "image": "app/static/images/about_us/dela_mata.png", "facebook": "https://www.facebook.com/profile.php?id=100091580852393/", "linkedin": "https://www.linkedin.com/", "is_leader": False},
             {"name": "Dominguez, Brein Lebron M.", "image": "app/static/images/about_us/dominguez.png", "facebook": "https://www.facebook.com/moygeorgeee/", "linkedin": "https://www.linkedin.com/", "is_leader": False},
-            {"name": "Eboña, Kyla L.", "image": "app/static/images/about_us./ebona.png", "facebook": "https://www.facebook.com/xyza.kai/", "linkedin": "https://www.linkedin.com/", "is_leader": False},
+            {"name": "Eboña, Kyla L.", "image": "app/static/images/about_us/ebona.png", "facebook": "https://www.facebook.com/xyza.kai/", "linkedin": "https://www.linkedin.com/", "is_leader": False},
             {"name": "Echano, Samantha Shane V.", "image": "app/static/images/about_us/echano.png", "facebook": "https://www.facebook.com/smntshane.echano/", "linkedin": "https://www.linkedin.com/", "is_leader": False},
             {"name": "Espanto, Ryza Regina A.", "image": "app/static/images/about_us/espanto.png", "facebook": "https://www.facebook.com/RyzaEspanto/", "linkedin": "https://www.linkedin.com/", "is_leader": False},
             {"name": "Estilles, Necamae B.", "image": "app/static/images/about_us/estilles.png", "facebook": "https://www.facebook.com/necamae.estilles/", "linkedin": "https://www.linkedin.com/", "is_leader": False},
