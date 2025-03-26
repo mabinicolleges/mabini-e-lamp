@@ -286,7 +286,7 @@ with feed_col:
         value=st.session_state.search_query,
         on_change=update_search,
     )
-    with sort_col.popover("Sort"):
+    with sort_col.popover(" "):
         sort_options = [
             "Relevance",
             "Alphabetical (A-Z)",
@@ -388,4 +388,4 @@ with feed_col:
                     st.session_state.page_num = total_pages - 1
                     st.rerun()
 
-        display_footer()
+    display_footer()
